@@ -23,7 +23,6 @@
               "kuromoji_stemmer",
               "kuromoji_baseform",
               "ja_stop",
-              "cjk_width",
               "lowercase"
             ]
           }
