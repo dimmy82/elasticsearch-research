@@ -1,0 +1,34 @@
+{
+  "settings": {
+    "number_of_shards": 1,
+    "number_of_replicas": 0,
+    "index": {
+      "analysis": {
+        "tokenizer": {
+          "blackletter_tokenizer": {
+            "type": "kuromoji_tokenizer",
+            "mode": "search",
+            "discard_compound_token": true
+          }
+        },
+        "analyzer": {
+          "blackletter": {
+            "char_filter": [
+              "icu_normalizer",
+              "kuromoji_iteration_mark"
+            ],
+            "tokenizer": "blackletter_tokenizer",
+            "filter": [
+              "kuromoji_part_of_speech",
+              "kuromoji_stemmer",
+              "kuromoji_baseform",
+              "ja_stop",
+              "cjk_width",
+              "lowercase"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
