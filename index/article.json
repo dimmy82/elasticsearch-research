@@ -5,24 +5,88 @@
     "index": {
       "analysis": {
         "tokenizer": {
-          "blackletter_tokenizer": {
+          "two_gram_tokenizer": {
+            "type": "ngram",
+            "min_gram": 2,
+            "max_gram": 2,
+            "token_chars": [
+              "letter",
+              "digit",
+              "symbol"
+            ]
+          },
+          "japanese_tokenizer": {
             "type": "kuromoji_tokenizer",
             "mode": "search",
             "discard_compound_token": true
           }
         },
+        "filter": {
+          "length_gt_1": {
+            "type": "length",
+            "min": 2
+          },
+          "english_stop": {
+            "type": "stop",
+            "stopwords": "_english_"
+          },
+          "english_stemmer": {
+            "type": "stemmer",
+            "language": "english"
+          },
+          "english_possessive_stemmer": {
+            "type": "stemmer",
+            "language": "possessive_english"
+          }
+        },
         "analyzer": {
-          "blackletter": {
+          "two_gram": {
+            "char_filter": [
+              "icu_normalizer"
+            ],
+            "tokenizer": "two_gram_tokenizer",
+            "filter": [
+              "lowercase"
+            ]
+          },
+          "english": {
+            "char_filter": [
+              "icu_normalizer"
+            ],
+            "tokenizer": "standard",
+            "filter": [
+              "english_possessive_stemmer",
+              "lowercase",
+              "english_stop",
+              "english_stemmer"
+            ]
+          },
+          "japanese_for_phrase": {
             "char_filter": [
               "icu_normalizer",
               "kuromoji_iteration_mark"
             ],
-            "tokenizer": "blackletter_tokenizer",
+            "tokenizer": "japanese_tokenizer",
             "filter": [
               "kuromoji_part_of_speech",
               "kuromoji_stemmer",
               "kuromoji_baseform",
               "ja_stop",
+              "lowercase"
+            ]
+          },
+          "japanese": {
+            "char_filter": [
+              "icu_normalizer",
+              "kuromoji_iteration_mark"
+            ],
+            "tokenizer": "japanese_tokenizer",
+            "filter": [
+              "kuromoji_part_of_speech",
+              "kuromoji_stemmer",
+              "kuromoji_baseform",
+              "ja_stop",
+              "length_gt_1",
               "lowercase"
             ]
           }
