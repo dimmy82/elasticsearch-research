@@ -37,6 +37,10 @@
           "english_possessive_stemmer": {
             "type": "stemmer",
             "language": "possessive_english"
+          },
+          "japanese_alphabet": {
+            "type": "kuromoji_readingform",
+            "use_romaji": true
           }
         },
         "analyzer": {
@@ -61,20 +65,6 @@
               "english_stemmer"
             ]
           },
-          "japanese_for_phrase": {
-            "char_filter": [
-              "icu_normalizer",
-              "kuromoji_iteration_mark"
-            ],
-            "tokenizer": "japanese_tokenizer",
-            "filter": [
-              "kuromoji_part_of_speech",
-              "kuromoji_stemmer",
-              "kuromoji_baseform",
-              "ja_stop",
-              "lowercase"
-            ]
-          },
           "japanese": {
             "char_filter": [
               "icu_normalizer",
@@ -89,6 +79,66 @@
               "length_gt_1",
               "lowercase"
             ]
+          },
+          "japanese_for_phrase": {
+            "char_filter": [
+              "icu_normalizer",
+              "kuromoji_iteration_mark"
+            ],
+            "tokenizer": "japanese_tokenizer",
+            "filter": [
+              "kuromoji_part_of_speech",
+              "kuromoji_stemmer",
+              "kuromoji_baseform",
+              "ja_stop",
+              "lowercase"
+            ]
+          },
+          "japanese_for_completion": {
+            "char_filter": [
+              "icu_normalizer",
+              "kuromoji_iteration_mark"
+            ],
+            "tokenizer": "japanese_tokenizer",
+            "filter": [
+              "kuromoji_part_of_speech",
+              "kuromoji_stemmer",
+              "kuromoji_baseform",
+              "ja_stop",
+              "japanese_alphabet",
+              "lowercase"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "mappings": {
+    "dynamic": "strict",
+    "properties": {
+      "text": {
+        "type": "keyword",
+        "index": false,
+        "fields": {
+          "ngram": {
+            "type": "text",
+            "analyzer": "two_gram"
+          },
+          "en": {
+            "type": "text",
+            "analyzer": "english"
+          },
+          "en_completion": {
+            "type": "completion",
+            "analyzer": "english"
+          },
+          "jp": {
+            "type": "text",
+            "analyzer": "japanese"
+          },
+          "jp_completion": {
+            "type": "completion",
+            "analyzer": "japanese_for_completion"
           }
         }
       }
