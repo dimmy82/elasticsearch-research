@@ -116,7 +116,7 @@
   "mappings": {
     "dynamic": "strict",
     "properties": {
-      "text": {
+      "name_en": {
         "type": "keyword",
         "index": false,
         "fields": {
@@ -124,20 +124,26 @@
             "type": "text",
             "analyzer": "two_gram"
           },
-          "en": {
+          "language": {
             "type": "text",
             "analyzer": "english"
-          },
-          "en_completion": {
-            "type": "completion",
-            "analyzer": "english"
-          },
-          "jp": {
+          }
+        }
+      },
+      "name_jp": {
+        "type": "keyword",
+        "index": false,
+        "fields": {
+          "ngram": {
             "type": "text",
-            "analyzer": "japanese"
+            "analyzer": "two_gram"
           },
-          "jp_completion": {
-            "type": "completion",
+          "language": {
+            "type": "text",
+            "analyzer": "japanese_for_phrase"
+          },
+          "language_alphabet": {
+            "type": "text",
             "analyzer": "japanese_for_completion"
           }
         }
