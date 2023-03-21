@@ -1,10 +1,11 @@
 <script>
-    export let name;
+    import SearchForm from "./SearchForm.svelte";
+    import SearchResult from "./SearchResult.svelte";
 </script>
 
 <main>
-    <h1>Hello {name}!</h1>
-    <p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+    <SearchForm></SearchForm>
+    <SearchResult></SearchResult>
 </main>
 
 <style>
