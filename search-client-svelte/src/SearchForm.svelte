@@ -74,22 +74,44 @@
                 },
                 "highlight": {
                     "fields": {
-                        "name_en.exact": {},
-                        "name_en.language": {},
-                        "name_en.ngram": {},
-                        "name_jp.exact": {},
-                        "name_jp.language": {},
-                        "name_jp.language_alphabet": {},
-                        "name_jp.ngram": {}
+                        "name_en.exact": {"pre_tags": ["<span style=\"color: red\">"], "post_tags": ["</span>"]},
+                        "name_en.language": {"pre_tags": ["<span style=\"color: red\">"], "post_tags": ["</span>"]},
+                        "name_en.ngram": {"pre_tags": ["<span style=\"color: red\">"], "post_tags": ["</span>"]},
+                        "name_jp.exact": {"pre_tags": ["<span style=\"color: red\">"], "post_tags": ["</span>"]},
+                        "name_jp.language": {"pre_tags": ["<span style=\"color: red\">"], "post_tags": ["</span>"]},
+                        "name_jp.language_alphabet": {"pre_tags": ["<span style=\"color: red\">"], "post_tags": ["</span>"]},
+                        "name_jp.ngram": {"pre_tags": ["<span style=\"color: red\">"], "post_tags": ["</span>"]}
                     }
                 },
                 "_source": false,
                 "size": 10
             })
         }).then(response => response.json())
-        console.log(result)
-        // $companies.push({name: searchValue});
-        // companies.set($companies)
+        // console.log(result)
+
+        let companiesFound = [];
+        let resultJson = JSON.parse(JSON.stringify(result));
+        companiesFound.push({name: `took: ${resultJson.took}`})
+        console.log(resultJson.hits.hits)
+        resultJson.hits.hits.forEach((hit) => {
+            if (hit.highlight["name_en.exact"]) {
+                companiesFound.push({name: hit.highlight["name_en.exact"]})
+            } else if (hit.highlight["name_jp.exact"]) {
+                companiesFound.push({name: hit.highlight["name_jp.exact"]})
+            } else if (hit.highlight["name_en.language"]) {
+                companiesFound.push({name: hit.highlight["name_en.language"]})
+            } else if (hit.highlight["name_jp.language"]) {
+                companiesFound.push({name: hit.highlight["name_jp.language"]})
+            } else if (hit.highlight["name_jp.language_alphabet"]) {
+                companiesFound.push({name: hit.highlight["name_jp.language_alphabet"]})
+            } else if (hit.highlight["name_en.ngram"]) {
+                companiesFound.push({name: hit.highlight["name_en.ngram"]})
+            } else if (hit.highlight["name_jp.ngram"]) {
+                companiesFound.push({name: hit.highlight["name_jp.ngram"]})
+            }
+        });
+
+        companies.set(companiesFound)
     }
 </script>
 

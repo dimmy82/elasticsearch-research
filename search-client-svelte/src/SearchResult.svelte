@@ -4,6 +4,6 @@
 
 <div>
     {#each $companies as company, index}
-        <div>{company.name}</div>
+        <div>{@html company.name}</div>
     {/each}
 </div>
