@@ -4,6 +4,13 @@
     "number_of_replicas": 0,
     "index": {
       "analysis": {
+        "char_filter": {
+          "trim_half_width_space": {
+            "type": "pattern_replace",
+            "pattern": "^ +| +$",
+            "replacement": ""
+          }
+        },
         "tokenizer": {
           "two_gram_tokenizer": {
             "type": "ngram",
@@ -22,6 +29,11 @@
           }
         },
         "filter": {
+          "remove_half_width_space": {
+            "type": "pattern_replace",
+            "pattern": " +",
+            "replacement": ""
+          },
           "length_gt_1": {
             "type": "length",
             "min": 2
@@ -44,23 +56,30 @@
           }
         },
         "analyzer": {
-          "two_gram": {
+          "icu_keyword": {
             "char_filter": [
               "icu_normalizer"
             ],
-            "tokenizer": "two_gram_tokenizer",
+            "tokenizer": "keyword",
             "filter": [
-              "lowercase"
+              "remove_half_width_space"
             ]
+          },
+          "two_gram": {
+            "char_filter": [
+              "icu_normalizer",
+              "trim_half_width_space"
+            ],
+            "tokenizer": "two_gram_tokenizer"
           },
           "english": {
             "char_filter": [
-              "icu_normalizer"
+              "icu_normalizer",
+              "trim_half_width_space"
             ],
             "tokenizer": "standard",
             "filter": [
               "english_possessive_stemmer",
-              "lowercase",
               "english_stop",
               "english_stemmer"
             ]
@@ -68,6 +87,7 @@
           "japanese": {
             "char_filter": [
               "icu_normalizer",
+              "trim_half_width_space",
               "kuromoji_iteration_mark"
             ],
             "tokenizer": "japanese_tokenizer",
@@ -76,13 +96,13 @@
               "kuromoji_stemmer",
               "kuromoji_baseform",
               "ja_stop",
-              "length_gt_1",
-              "lowercase"
+              "length_gt_1"
             ]
           },
           "japanese_for_phrase": {
             "char_filter": [
               "icu_normalizer",
+              "trim_half_width_space",
               "kuromoji_iteration_mark"
             ],
             "tokenizer": "japanese_tokenizer",
@@ -90,13 +110,13 @@
               "kuromoji_part_of_speech",
               "kuromoji_stemmer",
               "kuromoji_baseform",
-              "ja_stop",
-              "lowercase"
+              "ja_stop"
             ]
           },
           "japanese_for_completion": {
             "char_filter": [
               "icu_normalizer",
+              "trim_half_width_space",
               "kuromoji_iteration_mark"
             ],
             "tokenizer": "japanese_tokenizer",
@@ -105,8 +125,7 @@
               "kuromoji_stemmer",
               "kuromoji_baseform",
               "ja_stop",
-              "japanese_alphabet",
-              "lowercase"
+              "japanese_alphabet"
             ]
           }
         }
@@ -120,13 +139,17 @@
         "type": "keyword",
         "index": false,
         "fields": {
-          "ngram": {
+          "exact": {
             "type": "text",
-            "analyzer": "two_gram"
+            "analyzer": "icu_keyword"
           },
           "language": {
             "type": "text",
             "analyzer": "english"
+          },
+          "ngram": {
+            "type": "text",
+            "analyzer": "two_gram"
           }
         }
       },
@@ -134,9 +157,9 @@
         "type": "keyword",
         "index": false,
         "fields": {
-          "ngram": {
+          "exact": {
             "type": "text",
-            "analyzer": "two_gram"
+            "analyzer": "icu_keyword"
           },
           "language": {
             "type": "text",
@@ -145,6 +168,10 @@
           "language_alphabet": {
             "type": "text",
             "analyzer": "japanese_for_completion"
+          },
+          "ngram": {
+            "type": "text",
+            "analyzer": "two_gram"
           }
         }
       }
