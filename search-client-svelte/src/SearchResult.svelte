@@ -2,8 +2,8 @@
     import {companies} from "./Store.js";
 </script>
 
-<div>
+<div style="padding-left: 900px">
     {#each $companies as company, index}
-        <div>{@html company.name}</div>
+        <div style="text-align: left">{@html company.name}</div>
     {/each}
 </div>
