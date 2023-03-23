@@ -4,7 +4,7 @@
     let searchValue;
 
     const searchCompany = async () => {
-        let result = await fetch('http://localhost:9200/company/_search', {
+        let result = await fetch('http://localhost:1234/es/company/_search', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
