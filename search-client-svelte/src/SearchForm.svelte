@@ -84,7 +84,7 @@
                     }
                 },
                 "_source": false,
-                "size": 10
+                "size": 20
             })
         }).then(response => response.json())
         // console.log(result)
@@ -95,19 +95,19 @@
         console.log(resultJson.hits.hits)
         resultJson.hits.hits.forEach((hit) => {
             if (hit.highlight["name_en.exact"]) {
-                companiesFound.push({name: hit.highlight["name_en.exact"]})
+                companiesFound.push({name: `${hit.highlight["name_en.exact"]}　　　(${hit._score})`})
             } else if (hit.highlight["name_jp.exact"]) {
-                companiesFound.push({name: hit.highlight["name_jp.exact"]})
+                companiesFound.push({name: `${hit.highlight["name_jp.exact"]}　　　(${hit._score})`})
             } else if (hit.highlight["name_en.language"]) {
-                companiesFound.push({name: hit.highlight["name_en.language"]})
+                companiesFound.push({name: `${hit.highlight["name_en.language"]}　　　(${hit._score})`})
             } else if (hit.highlight["name_jp.language"]) {
-                companiesFound.push({name: hit.highlight["name_jp.language"]})
+                companiesFound.push({name: `${hit.highlight["name_jp.language"]}　　　(${hit._score})`})
             } else if (hit.highlight["name_jp.language_alphabet"]) {
-                companiesFound.push({name: hit.highlight["name_jp.language_alphabet"]})
+                companiesFound.push({name: `${hit.highlight["name_jp.language_alphabet"]}　　　(${hit._score})`})
             } else if (hit.highlight["name_en.ngram"]) {
-                companiesFound.push({name: hit.highlight["name_en.ngram"]})
+                companiesFound.push({name: `${hit.highlight["name_en.ngram"]}　　　(${hit._score})`})
             } else if (hit.highlight["name_jp.ngram"]) {
-                companiesFound.push({name: hit.highlight["name_jp.ngram"]})
+                companiesFound.push({name: `${hit.highlight["name_jp.ngram"]}　　　(${hit._score})`})
             }
         });
 
