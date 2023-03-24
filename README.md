@@ -2,5 +2,5 @@
 
 主に精度高く検索できるindex設計やqueryなどについて試したことをメモしておきます。
 
-調べた内容はテーマごとに分けてメモします。各[テーマ](elasticsearch/theme)にindex.jsonと各queryのjsonを保存しています。
+調べた内容はテーマごとに分けてメモします。各[テーマ](elasticsearch/theme)にindex.json、各queryのjsonと説明用readmeが保存されています。
 
