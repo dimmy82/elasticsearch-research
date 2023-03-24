@@ -1,4 +1,5 @@
-# This is a repository for Elasticsearch research
+# 神検索エンジンElasticsearchについて調査したことをまとめます
 
-I'll note what I've researched on index design, how to search with high accuracy, etc.
+主にindex設計、精度高く検索するqueryなどについて試したことをメモしておきます。
+調べた内容はテーマごとに分けてメモします。
 
