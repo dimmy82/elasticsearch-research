@@ -1,0 +1,1 @@
+# This is a repository for Elasticsearch research (index design, how to query, etc.)
