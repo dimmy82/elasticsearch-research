@@ -4,30 +4,6 @@
       "should": [
         {
           "match_phrase": {
-            "name_en.exact": {
-              "query": "Pattern",
-              "boost": 5
-            }
-          }
-        },
-        {
-          "match_phrase_prefix": {
-            "name_en.language": {
-              "query": "Pattern",
-              "boost": 3
-            }
-          }
-        },
-        {
-          "match_phrase_prefix": {
-            "name_en.ngram": {
-              "query": "Pattern",
-              "boost": 1
-            }
-          }
-        },
-        {
-          "match_phrase": {
             "name_jp.exact": {
               "query": "Pattern",
               "boost": 5
@@ -63,9 +39,6 @@
   },
   "highlight": {
     "fields": {
-      "name_en.exact": {},
-      "name_en.language": {},
-      "name_en.ngram": {},
       "name_jp.exact": {},
       "name_jp.language": {},
       "name_jp.language_alphabet": {},
@@ -73,5 +46,5 @@
     }
   },
   "_source": false,
-  "size": 10
+  "size": 100
 }
