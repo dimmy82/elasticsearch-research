@@ -1,0 +1,44 @@
+{
+  "settings": {
+    "number_of_shards": 1,
+    "number_of_replicas": 0,
+    "index": {
+      "analysis": {
+        "filter": {
+          "keep_url": {
+            "type": "keep_types",
+            "types": [
+              "<URL>"
+            ]
+          },
+          "extract_domain_from_url": {
+            "pattern": "^([^/]*//)*([^/?]+)([/?].*)*$",
+            "type": "pattern_replace",
+            "replacement": "$2"
+          }
+        },
+        "analyzer": {
+          "url_domain": {
+            "char_filter": [
+              "icu_normalizer"
+            ],
+            "tokenizer": "uax_url_email",
+            "filter": [
+              "keep_url",
+              "extract_domain_from_url"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "mappings": {
+    "dynamic": "strict",
+    "properties": {
+      "domain": {
+        "type": "text",
+        "analyzer": "url_domain"
+      }
+    }
+  }
+}
