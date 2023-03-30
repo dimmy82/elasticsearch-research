@@ -1,8 +1,8 @@
-# Elasticsearch について調査したことをまとめます
+# Elasticsearch について調査したことをまとめる
 
-主に精度高く検索できるindex設計やqueryなどについて試したことをメモしておきます。
+主に精度高く検索できるindex設計やqueryなどについて試したことをメモしておきる。
 
-調べた内容はテーマごとに分けてメモします。各[テーマ](elasticsearch/theme)に index.json, query用json, 説明用README があります。
+調べた内容はテーマごとに分けてメモする。各[テーマ](elasticsearch/theme)に index.json, query用json, 説明用README がある。
 
 ## 環境構築
 
@@ -24,9 +24,13 @@ cd elasticsearch
 ./docker_run.sh
 ```
 
-これで、 http://localhost:9200 でESへアクセスできるし、 http://localhost:5601 でKibanaへアクセスできます。
+これで、 http://localhost:9200 でESへアクセスできるし、 http://localhost:5601 でKibanaへアクセスできる。
 
-## index作成
+## index作成、データ準備、検索
 
-Kibanaをブラウザで開いて、作成したい index のjsonをコピペして実行する
+Kibanaをブラウザで開いて、各[テーマ](elasticsearch/theme)にある index.json をコピペして実行する
 
+例：
+![create index](resources/create_index.png)
+
+データ投入や検索QueryもKibana経由で実行すれば色々検証できる。
