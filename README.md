@@ -1,6 +1,6 @@
 # Elasticsearch について調査したことをまとめる
 
-主に精度高く検索できるindex設計やqueryなどについて試したことをメモしておきる。
+主に精度高く検索できるindex設計やqueryなどについて試したことをメモしておく。
 
 調べた内容はテーマごとに分けてメモする。各[テーマ](elasticsearch/theme)に index.json, query用json, 説明用README がある。
 
