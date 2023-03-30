@@ -4,7 +4,7 @@
     let searchValue;
 
     const searchCompany = async () => {
-        let result = await fetch('http://localhost:1234/es/company/_search', {
+        let result = await fetch('http://localhost:1234/es/short-word/_search', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -94,20 +94,20 @@
         companiesFound.push({name: `took: ${resultJson.took}`})
         console.log(resultJson.hits.hits)
         resultJson.hits.hits.forEach((hit) => {
-            if (hit.highlight["name_en.exact"]) {
-                companiesFound.push({name: `${hit.highlight["name_en.exact"]}　　　(${hit._score})`})
-            } else if (hit.highlight["name_jp.exact"]) {
-                companiesFound.push({name: `${hit.highlight["name_jp.exact"]}　　　(${hit._score})`})
+            if (hit.highlight["name_en.ngram"]) {
+                companiesFound.push({name: `${hit.highlight["name_en.ngram"]}　　　(${hit._score})`})
+            } else if (hit.highlight["name_jp.ngram"]) {
+                companiesFound.push({name: `${hit.highlight["name_jp.ngram"]}　　　(${hit._score})`})
             } else if (hit.highlight["name_en.language"]) {
                 companiesFound.push({name: `${hit.highlight["name_en.language"]}　　　(${hit._score})`})
             } else if (hit.highlight["name_jp.language"]) {
                 companiesFound.push({name: `${hit.highlight["name_jp.language"]}　　　(${hit._score})`})
             } else if (hit.highlight["name_jp.language_alphabet"]) {
                 companiesFound.push({name: `${hit.highlight["name_jp.language_alphabet"]}　　　(${hit._score})`})
-            } else if (hit.highlight["name_en.ngram"]) {
-                companiesFound.push({name: `${hit.highlight["name_en.ngram"]}　　　(${hit._score})`})
-            } else if (hit.highlight["name_jp.ngram"]) {
-                companiesFound.push({name: `${hit.highlight["name_jp.ngram"]}　　　(${hit._score})`})
+            } else if (hit.highlight["name_en.exact"]) {
+                companiesFound.push({name: `${hit.highlight["name_en.exact"]}　　　(${hit._score})`})
+            } else if (hit.highlight["name_jp.exact"]) {
+                companiesFound.push({name: `${hit.highlight["name_jp.exact"]}　　　(${hit._score})`})
             }
         });
 
@@ -115,7 +115,7 @@
     }
 </script>
 
-<h3>company name will be suggested</h3>
+<h3>the short words will be suggested</h3>
 <div>
-    <input type="text" bind:value={searchValue} placeholder="input any company name you like to search" on:keyup={searchCompany}>
+    <input type="text" bind:value={searchValue} placeholder="input any words you like to search" on:keyup={searchCompany}>
 </div>

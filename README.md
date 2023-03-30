@@ -34,3 +34,18 @@ Kibanaをブラウザで開いて、各[テーマ](elasticsearch/theme)にある
 ![create index](resources/create_index.png)
 
 データ投入や検索QueryもKibana経由で実行すれば色々検証できる。
+
+## 確認用のWebAppのサンプル
+
+```
+# start from repository root
+cd search-client-svelte
+# 初回だけ
+npm install
+npm run dev
+```
+
+デフォルトでは[short_words_completion](elasticsearch/theme/short_words_completion)のサンプルです。
+
+例：
+![short words completion](resources/short_words_completion.gif)
