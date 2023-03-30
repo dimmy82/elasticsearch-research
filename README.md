@@ -1,4 +1,4 @@
-# 検索エンジン Elasticsearch について調査したことをまとめます
+# Elasticsearch について調査したことをまとめます
 
 主に精度高く検索できるindex設計やqueryなどについて試したことをメモしておきます。
 
@@ -25,3 +25,8 @@ cd elasticsearch
 ```
 
 これで、 http://localhost:9200 でESへアクセスできるし、 http://localhost:5601 でKibanaへアクセスできます。
+
+## index作成
+
+Kibanaをブラウザで開いて、作成したい index のjsonをコピペして実行する
+
