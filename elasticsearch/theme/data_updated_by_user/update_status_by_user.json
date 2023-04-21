@@ -1,0 +1,36 @@
+{
+  "script": {
+    "source": """
+      if (ctx._source.status != null) {
+        def addNewStatus = ctx._source.status.stream()
+            .filter(s -> s.user_id == params.status.user_id)
+            .findFirst()
+            .map(s -> {
+              s.memo = params.status.memo;
+              return false;
+            })
+            .orElse(true);
+        if (addNewStatus) {
+            ctx._source.status.add(params.status)
+        }
+      } else {
+        ctx._source.status = new ArrayList();
+        ctx._source.status.add(params.status)
+      }
+    """,
+    "params": {
+      "status": {
+        "user_id": "user001",
+        "memo": "memo writen by user001"
+      }
+    }
+  },
+  "upsert": {
+    "status": [
+      {
+        "user_id": "user001",
+        "memo": "memo writen by user001"
+      }
+    ]
+  }
+}

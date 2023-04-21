@@ -1,0 +1,28 @@
+{
+  "settings": {
+    "number_of_shards": 1,
+    "number_of_replicas": 0
+  },
+  "mappings": {
+    "dynamic": "strict",
+    "properties": {
+      "name": {
+        "type": "text",
+        "analyzer": "standard"
+      },
+      "status": {
+        "type": "nested",
+        "dynamic": "strict",
+        "properties": {
+          "user_id": {
+            "type": "keyword"
+          },
+          "memo": {
+            "type": "text",
+            "analyzer": "standard"
+          }
+        }
+      }
+    }
+  }
+}
