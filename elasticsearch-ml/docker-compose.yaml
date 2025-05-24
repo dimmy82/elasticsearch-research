@@ -1,0 +1,29 @@
+version: "3"
+services:
+  elasticsearch:
+    build: ./docker
+    container_name: elasticsearch
+    environment:
+      - "ES_JAVA_OPTS=-Xms2g -Xmx2g"
+      - "discovery.type=single-node"
+      - "xpack.security.http.ssl.enabled=false"
+      - "ELASTIC_PASSWORD=passw0rd"
+    ports:
+      - 9200:9200
+      - 9300:9300
+    networks:
+      - es_kibana_nw
+  kibana:
+    image: kibana:9.0.1
+    container_name: kibana
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - ELASTICSEARCH_SERVICEACCOUNTTOKEN=AAEAAWVsYXN0aWMva2liYW5hL3Rva2VuLWZvci1raWJhbmE6MGNGVE1TaGFRNXlkOXRRMkd1bEZaUQ
+    ports:
+      - 5601:5601
+    networks:
+      - es_kibana_nw
+    depends_on:
+      - elasticsearch
+networks:
+  es_kibana_nw:
