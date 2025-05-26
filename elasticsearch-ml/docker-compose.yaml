@@ -2,7 +2,7 @@ version: "3"
 services:
   elasticsearch:
     build: ./docker
-    container_name: elasticsearch
+    container_name: elasticsearch_901
     environment:
       - "ES_JAVA_OPTS=-Xms2g -Xmx2g"
       - "discovery.type=single-node"
@@ -11,19 +11,51 @@ services:
     ports:
       - 9200:9200
       - 9300:9300
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl -s http://localhost:9200/_cluster/health?wait_for_status=green&timeout=5s",
+        ]
+      interval: 10s
+      timeout: 10s
+      retries: 15
     networks:
       - es_kibana_nw
   kibana:
     image: kibana:9.0.1
-    container_name: kibana
+    container_name: kibana_901
     environment:
       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
-      - ELASTICSEARCH_SERVICEACCOUNTTOKEN=AAEAAWVsYXN0aWMva2liYW5hL3Rva2VuLWZvci1raWJhbmE6MGNGVE1TaGFRNXlkOXRRMkd1bEZaUQ
+      # ESを起動して下記のコマンドを叩いて生成されたtokenを設定し、docker composeを再実行する
+      # curl -u elastic:passw0rd -X POST "http://localhost:9200/_security/service/elastic/kibana/credential/token/token-for-kibana"
+      - ELASTICSEARCH_SERVICEACCOUNTTOKEN=AAEAAWVsYXN0aWMva2liYW5hL3Rva2VuLWZvci1raWJhbmE6TjRmWHd0cXBUSnVCdThxVlg5bEtMZw
     ports:
       - 5601:5601
     networks:
       - es_kibana_nw
     depends_on:
-      - elasticsearch
+      elasticsearch:
+        condition: service_healthy
+  eland:
+    image: docker.elastic.co/eland/eland:9.0.1
+    container_name: eland_901
+    environment:
+      - ES_HOST=elasticsearch
+      - ES_PORT=9200
+    command:
+      [
+        "eland_import_hub_model",
+        "--url",
+        "http://elastic:passw0rd@elasticsearch:9200",
+        "--hub-model-id",
+        "intfloat/multilingual-e5-large-instruct",
+        "--start",
+      ]
+    networks:
+      - es_kibana_nw
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
 networks:
   es_kibana_nw:
