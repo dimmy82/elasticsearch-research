@@ -1,7 +1,6 @@
 FROM elasticsearch:9.0.1
 
 USER root
-RUN sysctl -w vm.max_map_count=262144
 RUN microdnf install -y jq && microdnf clean all
 
 USER elasticsearch

@@ -26,10 +26,14 @@ services:
     image: kibana:9.0.1
     container_name: kibana_901
     environment:
-      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - "ELASTICSEARCH_HOSTS=http://elasticsearch:9200"
       # ESを起動して下記のコマンドを叩いて生成されたtokenを設定し、docker composeを再実行する
       # curl -u elastic:passw0rd -X POST "http://localhost:9200/_security/service/elastic/kibana/credential/token/token-for-kibana"
-      - ELASTICSEARCH_SERVICEACCOUNTTOKEN=AAEAAWVsYXN0aWMva2liYW5hL3Rva2VuLWZvci1raWJhbmE6TjRmWHd0cXBUSnVCdThxVlg5bEtMZw
+      # - ELASTICSEARCH_SERVICEACCOUNTTOKEN=AAEAAWVsYXN0aWMva2liYW5hL3Rva2VuLWZvci1raWJhbmE6TjRmWHd0cXBUSnVCdThxVlg5bEtMZw
+      - "ELASTIC_PASSWORD=passw0rd"
+    volumes:
+      - ./kibana-entrypoint.sh:/usr/local/bin/kibana-entrypoint.sh:ro
+    entrypoint: ["/bin/bash", "-c", "/usr/local/bin/kibana-entrypoint.sh"]
     ports:
       - 5601:5601
     networks:
