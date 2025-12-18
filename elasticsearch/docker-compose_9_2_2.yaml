@@ -1,8 +1,8 @@
 version: "3"
 services:
   elasticsearch:
-    build: ./docker
-    container_name: elasticsearch_901
+    image: elasticsearch:9.2.2
+    container_name: elasticsearch
     environment:
       - "ES_JAVA_OPTS=-Xms2g -Xmx2g"
       - "discovery.type=single-node"
@@ -23,36 +23,16 @@ services:
     networks:
       - es_kibana_nw
   kibana:
-    image: kibana:9.0.1
-    container_name: kibana_901
+    image: kibana:9.2.2
+    container_name: kibana
     environment:
       - "ELASTICSEARCH_HOSTS=http://elasticsearch:9200"
       - "ELASTIC_PASSWORD=passw0rd"
     volumes:
-      - ./kibana-entrypoint.sh:/usr/local/bin/kibana-entrypoint.sh:ro
+      - ./kibana-entrypoint_9_2_2.sh:/usr/local/bin/kibana-entrypoint.sh:ro
     entrypoint: ["/bin/bash", "-c", "/usr/local/bin/kibana-entrypoint.sh"]
     ports:
       - 5601:5601
-    networks:
-      - es_kibana_nw
-    depends_on:
-      elasticsearch:
-        condition: service_healthy
-  eland:
-    image: docker.elastic.co/eland/eland:9.0.1
-    container_name: eland_901
-    environment:
-      - ES_HOST=elasticsearch
-      - ES_PORT=9200
-    command:
-      [
-        "eland_import_hub_model",
-        "--url",
-        "http://elastic:passw0rd@elasticsearch:9200",
-        "--hub-model-id",
-        "intfloat/multilingual-e5-large-instruct",
-        "--start",
-      ]
     networks:
       - es_kibana_nw
     depends_on:
