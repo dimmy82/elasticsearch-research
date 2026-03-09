@@ -1,7 +1,9 @@
 version: "3"
 services:
   elasticsearch:
-    image: elasticsearch:9.2.2
+    build:
+      context: ./docker
+      dockerfile: Dockerfile_9_2_2
     container_name: elasticsearch
     environment:
       - "ES_JAVA_OPTS=-Xms2g -Xmx2g"
